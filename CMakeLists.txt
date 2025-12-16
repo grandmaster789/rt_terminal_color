@@ -1,12 +1,13 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.20)
 
-project(rt_terminal_color)
+project(rt_terminal_color LANGUAGES CXX)
 
 # Project template to make a cmake fetch-content-able library with CI/CD and testing triggers
 
 option(RT_TERMINAL_COLOR_BUILD_TESTS "Build rt_terminal_color unit tests" OFF)
 
-add_library(rt_terminal_color)
+add_library(rt_terminal_color STATIC)
+add_library(rt::terminal_color ALIAS rt_terminal_color)
 
 file(GLOB_RECURSE rt_terminal_color_source CONFIGURE_DEPENDS
 	"${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
@@ -25,7 +26,7 @@ if (RT_TERMINAL_COLOR_BUILD_TESTS)
 	enable_testing()
 
 	# catch2 is only needed when tests are enabled
-	add_subdirectory(dependencies)
+	add_subdirectory(dependencies EXCLUDE_FROM_ALL)
 
 	add_executable(rt_terminal_color_unittest)
 
@@ -46,7 +47,6 @@ if (RT_TERMINAL_COLOR_BUILD_TESTS)
 	)
 endif()
 
-# while this one is a header-only library, it's good to specify an install target
 include(GNUInstallDirs)
 
 # install public headers
