@@ -35,6 +35,7 @@ target_include_directories(rt_terminal_color_unittest PRIVATE
 )
 target_link_libraries     (rt_terminal_color_unittest PRIVATE
 	Catch2::Catch2WithMain
+	rt_terminal_color
 )
 
 # should probably make testing optional
